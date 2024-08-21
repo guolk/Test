@@ -1,0 +1,55 @@
+	<!DOCTYPE html>
+	<html>
+	
+	<head>
+		<meta charset="UTF-8">
+		<title>測試頁面</title>
+		<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
+		<script>
+			$(function () {
+	
+				var btn = $("#btn1");
+				btn.click(function () {
+					$.ajax({
+						url: "/getMasterInfoForPropertyCards",
+						type: "get",
+						data: {"shopId": "a00001"},
+						success: function (data) {
+							console.log(data)
+							var shop = data.data;
+							var str = "";
+							str = "<div>商店id：<span >" + shop.id + "</span><br>" +
+								"商店名称：<span>" + shop.shopName + "</span><br>" +
+								"商品编码：<span>" + shop.shopCode + "</span></div> <button id='btn2'>next</button>";
+							$("#shop").html(str);
+	
+	
+							$("#btn2").click(function () {
+	
+								$.ajax({
+									url: "productLogin",
+									type: "get",
+									success: function (data) {
+										window.location.replace("http://localhost:8080/productLogin");
+									}
+	
+								})
+							})
+						}
+					})
+				})
+	
+			})
+		</script>
+	
+	</head>
+
+	<body>
+		<h1>加盟店注冊!!!</h1>
+		<form>
+			<input id="btn1" type="button" value="獲取信息">
+		</form>
+		<div id="shop"></div>
+	</body>
+	
+	</html>
